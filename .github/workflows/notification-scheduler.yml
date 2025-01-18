@@ -3,7 +3,7 @@ name: Notification Scheduler
 on:
   schedule:
     # Schedule to run daily at midnight UTC
-    - cron: '0 0 * * *'  # Fixed syntax: 5 stars needed for cron expression
+    - cron: '1 0 * * *'  # Fixed syntax: 5 stars needed for cron expression
 
 jobs:
   schedule-notifications:
