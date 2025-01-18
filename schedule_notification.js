@@ -146,17 +146,10 @@ const notificationSchedule = [
     }
 ];
 
-// Function to send a notification
+
+
+// Modified function to send a notification
 const sendNotification = async (title, message, time) => {
-    const sendTime = new Date();
-    const [hours, minutes, seconds] = time.split(":").map(Number);
-    sendTime.setHours(hours, minutes, seconds, 0);
-
-    // Check if the time has already passed today
-    if (sendTime < new Date()) {
-        sendTime.setDate(sendTime.getDate() + 1);
-    }
-
     try {
         const response = await axios.post(
             'https://onesignal.com/api/v1/notifications',
@@ -166,12 +159,12 @@ const sendNotification = async (title, message, time) => {
                 contents: { en: message },
                 priority: 'HIGH',
                 included_segments: ['All'],
-                send_after: sendTime.toISOString(),
+                send_after: time.toISOString(),
                 is_local_time: true,
             },
             {
                 headers: {
-                    Authorization: `Basic ${process.env.ONESIGNAL_REST_API_KEY}`,
+                    'Authorization': `Basic ${process.env.ONESIGNAL_REST_API_KEY}`,
                     'Content-Type': 'application/json',
                 },
             }
@@ -179,7 +172,7 @@ const sendNotification = async (title, message, time) => {
         console.log('Notification Scheduled:', {
             title,
             message,
-            scheduledTime: sendTime.toISOString()
+            scheduledTime: time.toISOString()
         });
         return response.data;
     } catch (error) {
@@ -201,10 +194,14 @@ const scheduleNotifications = async () => {
         if (todaySchedule) {
             console.log(`Scheduling notifications for ${todayDay}`);
             for (const notification of todaySchedule.notifications) {
+                const [hours, minutes, seconds] = notification.time.split(":").map(Number);
+                const scheduledTime = new Date();
+                scheduledTime.setUTCHours(hours, minutes, seconds, 0);
+
                 await sendNotification(
                     notification.title,
                     notification.message,
-                    notification.time
+                    scheduledTime
                 );
             }
             console.log(`Successfully scheduled all notifications for ${todayDay}`);
@@ -213,24 +210,13 @@ const scheduleNotifications = async () => {
         }
     } catch (error) {
         console.error('Error in scheduleNotifications:', error);
+        process.exit(1); // Exit with error code for GitHub Actions
     }
 };
 
-// Create the daily scheduler job
-const schedulerJob = new CronJob(
-    '*/1 * * * *',  // Run every minute
-    async () => {
-        console.log('Running test notification scheduler...');
-        await scheduleNotifications();
-    },
-    null,
-    true,
-    'UTC'
-);
-
-// Start the scheduler
+// Run the scheduler
 console.log('Starting notification scheduler...');
-schedulerJob.start();
-
-// Run immediately on startup
-scheduleNotifications().catch(console.error);
+scheduleNotifications().catch(error => {
+    console.error('Fatal error:', error);
+    process.exit(1);
+});
