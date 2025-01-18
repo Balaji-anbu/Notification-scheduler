@@ -108,7 +108,19 @@ const notificationSchedule = [
         day: "Saturday",
         notifications: [
             {
-                time: "09:05:00",
+                time: "10:05:00",
+                title: "Its Weekend Right",
+                message: "Weekend vibes are here! Don't miss our morning show featuring inspiring stories from our community.🌈",
+            },
+
+            {
+                time: "10:06:00",
+                title: "Its Weekend Right",
+                message: "Weekend vibes are here! Don't miss our morning show featuring inspiring stories from our community.🌈",
+            },
+
+            {
+                time: "10:08:00",
                 title: "Its Weekend Right",
                 message: "Weekend vibes are here! Don't miss our morning show featuring inspiring stories from our community.🌈",
             },
