@@ -161,7 +161,7 @@ const sendNotification = async (title, message, time) => {
         const response = await axios.post(
             'https://onesignal.com/api/v1/notifications',
             {
-                app_id: '43dcbfa9-f88c-41ce-aa91-8b13eefbbd81',
+                app_id: process.env.ONESIGNAL_APP_ID,
                 headings: { en: title },
                 contents: { en: message },
                 priority: 'HIGH',
@@ -171,7 +171,7 @@ const sendNotification = async (title, message, time) => {
             },
             {
                 headers: {
-                    Authorization: 'Basic os_v2_app_ipol7kpyrra45kurrmj65655qe3pfmzn5odu4yvq4d7n5pcp7btxwtaae7kxyaquxprjl2iskmeqvjcroww4h2shja2lufyqmqnhhri',
+                    Authorization: `Basic ${process.env.ONESIGNAL_REST_API_KEY}`,
                     'Content-Type': 'application/json',
                 },
             }
