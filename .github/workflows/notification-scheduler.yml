@@ -3,7 +3,7 @@ name: Notification Scheduler
 on:
   schedule:
     # Schedule to run daily at midnight UTC
-    - cron: '0 0 * * *'
+    - cron: '*/1 * * * *'
 
 jobs:
   schedule-notifications:
@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Run Notification Scheduler
-        run: node index.js
+        run: node schedule_notification.js
         env:
           ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
           ONESIGNAL_REST_API_KEY: ${{ secrets.ONESIGNAL_REST_API_KEY }}
