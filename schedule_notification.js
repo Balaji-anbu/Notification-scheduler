@@ -108,29 +108,23 @@ const notificationSchedule = [
         day: "Saturday",
         notifications: [
             {
-                time: "11:05:00",
+                time: "07:05:00",
                 title: "Its Weekend Right",
                 message: "Weekend vibes are here! Don't miss our morning show featuring inspiring stories from our community.🌈",
             },
 
             {
-                time: "11:10:00",
-                title: "Its Weekend Right",
-                message: "Weekend vibes are here! Don't miss our morning show featuring inspiring stories from our community.🌈",
-            },
-
-            {
-                time: "11:15:00",
-                title: "Its Weekend Right",
+                time: "14:15:00",
+                title: "How is it Going",
                 message: "Weekend vibes are here! Don't miss our morning show featuring inspiring stories from our community.🌈",
             },
             {
-                time: "13:00:00",
+                time: "18:00:00",
                 title: "Time for Lunch!",
                 message: "Enjoy your meal and make it better with our engaging podcasts! 🎙️"
             },
             {
-                time: "18:00:00",
+                time: "22:00:00",
                 title: "More Than Podcasts!🤔",
                 message: "Arasu FM App offers more than just podcasts—explore our engaging video content too!📺"
             },
